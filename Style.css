@@ -1,0 +1,176 @@
+/* ---------- Colors: change these to restyle the whole site ---------- */
+:root {
+    color-scheme: dark;
+    --green: #3fb37f;
+    --red: #e5534b;
+    --background: #0f1419;
+    --card: #1a2027;
+    --input: #232b34;
+    --border: #2f3a45;
+    --text: #e6edf3;
+    --muted: #8b98a5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+}
+
+/* ---------- Page layout ---------- */
+header, .row {
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+}
+
+    header h1 {
+        color: var(--green);
+        margin-bottom: 4px;
+    }
+
+    header p {
+        color: var(--muted);
+        margin-top: 0;
+    }
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow-x: auto; /* wide tables scroll sideways instead of breaking the layout */
+}
+
+    .card h2 {
+        margin-top: 0;
+        color: var(--green);
+        font-size: 1.2rem;
+    }
+
+    .card h3 {
+        font-size: 1rem;
+        margin: 20px 0 6px 0;
+    }
+
+.hint {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+/* ---------- Forms ---------- */
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+input, select {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: normal;
+    background-color: var(--input);
+    color: var(--text);
+}
+
+button {
+    background-color: var(--green);
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    button.delete {
+        background-color: var(--red);
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+
+#message {
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* ---------- Tables ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th {
+    color: var(--muted);
+}
+
+/* ---------- Summary ---------- */
+#summary {
+    margin-top: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ---------- Charts ---------- */
+.chart-wrap {
+    position: relative;
+}
+
+.pie-box {
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+}
+
+button.secondary,
+button.edit {
+    background-color: var(--input);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+button.edit {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    margin-right: 6px;
+}

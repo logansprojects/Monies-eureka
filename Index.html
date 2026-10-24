@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Budget Site</title>
+    <link rel="stylesheet" href="Style.css" />
+</head>
+<body>
+
+    <header>
+        <h1>Paycheck Budget</h1>
+        <p>Track your income, bills and spending, and see how each paycheck should be split.</p>
+    </header>
+
+    <!-- ROW 1: Enter your money -->
+    <div class="row">
+
+        <section class="card">
+            <h2>Add income</h2>
+            <form id="paycheck-form">
+                <label>
+                    Pay date
+                    <input type="date" id="pay-date" required />
+                </label>
+                <label>
+                    Source
+                    <select id="source">
+                        <option>Paycheck</option>
+                        <option>Side job</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <label>
+                    Gross pay ($)
+                    <input type="number" id="gross" step="0.01" min="0" required />
+                </label>
+                <label>
+                    Average deductions ($)
+                    <input type="number" id="deductions" step="0.01" min="0" />
+                </label>
+                <button>Save income</button>
+                <button type="reset" class="secondary">Clear</button>
+            </form>
+            <p id="message"></p>
+
+            <h3>Income records</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pay date</th>
+                        <th>Source</th>
+                        <th>Gross</th>
+                        <th>Deductions</th>
+                        <th>Take-home</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="paycheck-rows"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>Monthly bills</h2>
+            <form id="bill-form">
+                <label>
+                    Bill name
+                    <input type="text" id="bill-name" placeholder="e.g. Netflix" required />
+                </label>
+                <label>
+                    Amount per month ($)
+                    <input type="number" id="bill-amount" step="0.01" min="0" required />
+                </label>
+                <label>
+                    Category
+                    <select id="bill-category">
+                        <option>Rent/Housing</option>
+                        <option>Utilities</option>
+                        <option>Subscriptions</option>
+                        <option>Phone/Internet</option>
+                        <option>Car/Gas</option>
+                        <option>Food</option>
+                        <option>Insurance</option>
+                        <option>Savings</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <button>Save bill</button>
+                <button type="reset" class="secondary">Clear</button>
+
+            </form>
+
+            <h3>Your bills</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bill</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="bill-rows"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2>Other expenses</h2>
+            <p class="hint">One-time or irregular spending. Only counts in the month it happens.</p>
+            <form id="expense-form">
+                <label>
+                    Date
+                    <input type="date" id="expense-date" required />
+                </label>
+                <label>
+                    What was it?
+                    <input type="text" id="expense-name" placeholder="e.g. Oil change" required />
+                </label>
+                <label>
+                    Amount ($)
+                    <input type="number" id="expense-amount" step="0.01" min="0" required />
+                </label>
+                <label>
+                    Category
+                    <select id="expense-category">
+                        <option>Food</option>
+                        <option>Car/Gas</option>
+                        <option>Shopping</option>
+                        <option>Medical</option>
+                        <option>Entertainment</option>
+                        <option>Gifts</option>
+                        <option>Home</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+                <button>Save expense</button>
+                <button type="reset" class="secondary">Clear</button>
+            </form>
+
+            <h3>Your expenses</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Expense</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="expense-rows"></tbody>
+            </table>
+        </section>
+
+    </div>
+
+    
+    <div class="row">
+
+        <section class="card">
+            <h2>Monthly summary</h2>
+            <label>
+                Month
+                <input type="month" id="summary-month" />
+            </label>
+            <div id="summary"></div>
+        </section>
+
+        <section class="card">
+            <h2>Paycheck split</h2>
+            <p class="hint">Splits this month's bills and expenses across your paychecks.</p>
+            <label>
+                How often are you paid?
+                <select id="pay-frequency">
+                    <option value="14">Every 2 weeks</option>
+                    <option value="7">Weekly</option>
+                </select>
+            </label>
+            <label>
+                One of your real paydays
+                <input type="date" id="known-payday" />
+            </label>
+            <p id="split-note"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payday</th>
+                        <th>Set aside</th>
+                        <th>Take-home</th>
+                        <th>Yours to spend</th>
+                    </tr>
+                </thead>
+                <tbody id="split-rows"></tbody>
+            </table>
+        </section>
+
+    </div>
+
+
+    <div class="row">
+
+        <section class="card">
+            <h2>Paycheck history</h2>
+            <div class="chart-wrap">
+                <canvas id="income-chart"></canvas>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Where the money goes</h2>
+            <div class="chart-wrap pie-box">
+                <canvas id="category-chart"></canvas>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
