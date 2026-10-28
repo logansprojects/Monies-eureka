@@ -1,4 +1,4 @@
-/* ---------- Colors: change these to restyle the whole site ---------- */
+
 :root {
     color-scheme: dark;
     --green: #3fb37f;
@@ -23,7 +23,7 @@ body {
     padding: 20px;
 }
 
-/* ---------- Page layout ---------- */
+
 header, .row {
     max-width: 1200px;
     margin: 0 auto 20px auto;
@@ -50,7 +50,7 @@ header, .row {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    overflow-x: auto; /* wide tables scroll sideways instead of breaking the layout */
+    overflow-x: auto; 
 }
 
     .card h2 {
@@ -70,7 +70,6 @@ header, .row {
     margin-top: 0;
 }
 
-/* ---------- Forms ---------- */
 label {
     display: block;
     font-weight: bold;
@@ -116,7 +115,6 @@ button {
     font-weight: bold;
 }
 
-/* ---------- Tables ---------- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -133,7 +131,7 @@ th {
     color: var(--muted);
 }
 
-/* ---------- Summary ---------- */
+
 #summary {
     margin-top: 10px;
 }
@@ -145,7 +143,7 @@ th {
     border-bottom: 1px solid var(--border);
 }
 
-/* ---------- Charts ---------- */
+
 .chart-wrap {
     position: relative;
 }
@@ -155,7 +153,7 @@ th {
     margin: 0 auto;
 }
 
-/* ---------- Phones ---------- */
+
 @media (max-width: 600px) {
     body {
         padding: 10px;
