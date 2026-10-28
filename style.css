@@ -174,3 +174,13 @@ button.edit {
     font-size: 0.85rem;
     margin-right: 6px;
 }
+
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card);
+    padding: 10px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
