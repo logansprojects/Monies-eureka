@@ -1,6 +1,4 @@
-// ========== 1. FIND THINGS ON THE PAGE ==========
 
-// Income form and table
 const form = document.getElementById("paycheck-form");
 const dateinput = document.getElementById("pay-date");
 const sourceinput = document.getElementById("source");
@@ -9,14 +7,13 @@ const deductionsinput = document.getElementById("deductions");
 const message = document.getElementById("message");
 const rows = document.getElementById("paycheck-rows");
 
-// Bills form and table
+
 const billform = document.getElementById("bill-form");
 const billnameinput = document.getElementById("bill-name");
 const billamountinput = document.getElementById("bill-amount");
 const billcategoryinput = document.getElementById("bill-category");
 const billrows = document.getElementById("bill-rows");
 
-// Other expenses form and table
 const expenseform = document.getElementById("expense-form");
 const expensedateinput = document.getElementById("expense-date");
 const expensenameinput = document.getElementById("expense-name");
@@ -24,22 +21,20 @@ const expenseamountinput = document.getElementById("expense-amount");
 const expensecategoryinput = document.getElementById("expense-category");
 const expenserows = document.getElementById("expense-rows");
 
-// Monthly summary
 const monthinput = document.getElementById("summary-month");
 const summaryoutput = document.getElementById("summary");
 
-// Paycheck split
 const frequencyinput = document.getElementById("pay-frequency");
 const knownpaydayinput = document.getElementById("known-payday");
 const splitnote = document.getElementById("split-note");
 const splitrows = document.getElementById("split-rows");
 
-// Charts
+
 const chartcanvas = document.getElementById("income-chart");
 const categorycanvas = document.getElementById("category-chart");
 
 
-// ========== 2. LOAD SAVED DATA ==========
+
 
 let paychecks = JSON.parse(localStorage.getItem("paychecks")) || [];
 let bills = JSON.parse(localStorage.getItem("bills")) || [];
@@ -48,13 +43,13 @@ let schedule = JSON.parse(localStorage.getItem("schedule")) || { frequency: "14"
 let incomechart = null;
 let categorychart = null;
 
-// NEW: which entry is being edited (null means none)
+
 let editingpaycheck = null;
 let editingbill = null;
 let editingexpense = null;
 
 
-// ========== 3. WHEN THE USER DOES SOMETHING ==========
+
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -66,7 +61,7 @@ form.addEventListener("submit", function (event) {
         deductions: Number(deductionsinput.value)
     };
 
-    // CHANGED: add a new entry, or replace the one being edited
+
     if (editingpaycheck === null) {
         paychecks.push(paycheck);
         message.textContent = "Income saved!";
@@ -80,7 +75,7 @@ form.addEventListener("submit", function (event) {
     form.reset();
 });
 
-// NEW: clearing the form also cancels editing
+
 form.addEventListener("reset", function () {
     editingpaycheck = null;
     form.querySelector("button").textContent = "Save income";
@@ -95,7 +90,6 @@ billform.addEventListener("submit", function (event) {
         category: billcategoryinput.value
     };
 
-    // CHANGED
     if (editingbill === null) {
         bills.push(bill);
     } else {
@@ -107,7 +101,7 @@ billform.addEventListener("submit", function (event) {
     billform.reset();
 });
 
-// NEW
+
 billform.addEventListener("reset", function () {
     editingbill = null;
     billform.querySelector("button").textContent = "Save bill";
@@ -123,7 +117,7 @@ expenseform.addEventListener("submit", function (event) {
         category: expensecategoryinput.value
     };
 
-    // CHANGED
+
     if (editingexpense === null) {
         expenses.push(expense);
     } else {
@@ -135,7 +129,7 @@ expenseform.addEventListener("submit", function (event) {
     expenseform.reset();
 });
 
-// NEW
+
 expenseform.addEventListener("reset", function () {
     editingexpense = null;
     expenseform.querySelector("button").textContent = "Save expense";
@@ -155,7 +149,6 @@ function schedulechanged() {
 frequencyinput.addEventListener("change", schedulechanged);
 knownpaydayinput.addEventListener("change", schedulechanged);
 
-// NEW: fill a form with an entry so it can be changed
 function editPaycheck(index) {
     const paycheck = paychecks[index];
     dateinput.value = paycheck.date;
@@ -191,7 +184,6 @@ function editExpense(index) {
     expenseform.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-// CHANGED: deleting cancels any edit in progress, because positions shift
 function deletePaycheck(index) {
     if (confirm("Delete this income entry?")) {
         paychecks.splice(index, 1);
@@ -226,7 +218,7 @@ function deleteExpense(index) {
 }
 
 
-// ========== 4. SAVING ==========
+
 
 function saveData() {
     localStorage.setItem("paychecks", JSON.stringify(paychecks));
@@ -236,7 +228,7 @@ function saveData() {
 }
 
 
-// ========== 5. DRAWING THE PAGE ==========
+
 
 function showAll() {
     showPaychecks();
@@ -256,7 +248,7 @@ function showPaychecks() {
         addCell(row, "$" + paycheck.gross.toFixed(2));
         addCell(row, "$" + paycheck.deductions.toFixed(2));
         addCell(row, "$" + (paycheck.gross - paycheck.deductions).toFixed(2));
-        // CHANGED: Edit and Delete buttons
+        
         addButtons(row,
             function () { editPaycheck(index); },
             function () { deletePaycheck(index); }
@@ -273,7 +265,7 @@ function showBills() {
         addCell(row, bill.name);
         addCell(row, bill.category);
         addCell(row, "$" + bill.amount.toFixed(2));
-        // CHANGED
+       
         addButtons(row,
             function () { editBill(index); },
             function () { deleteBill(index); }
@@ -303,7 +295,6 @@ function showExpenses() {
 function showSummary() {
     const month = monthinput.value;
 
-    // Add up income received in the chosen month
     let paychecktotal = 0;
     let othertotal = 0;
     paychecks.forEach(function (paycheck) {
@@ -318,13 +309,11 @@ function showSummary() {
         }
     });
 
-    // Add up the monthly bills (these count every month)
     let billtotal = 0;
     bills.forEach(function (bill) {
         billtotal = billtotal + bill.amount;
     });
 
-    // Add up other expenses in the chosen month only
     let expensetotal = 0;
     expenses.forEach(function (expense) {
         if (expense.date.startsWith(month)) {
@@ -334,7 +323,7 @@ function showSummary() {
 
     const leftover = paychecktotal + othertotal - billtotal - expensetotal;
 
-    // Draw the summary
+
     summaryoutput.innerHTML = "";
     addSummaryRow("Paychecks (take-home)", paychecktotal);
     addSummaryRow("Other income", othertotal);
@@ -342,7 +331,7 @@ function showSummary() {
     addSummaryRow("Other expenses", expensetotal);
     addSummaryRow("Left over", leftover);
 
-    // What the paychecks need to cover after other income
+   
     let tocover = billtotal + expensetotal - othertotal;
     if (tocover < 0) {
         tocover = 0;
@@ -398,12 +387,11 @@ function getPaydays(month) {
     const monthend = new Date(monthstart);
     monthend.setMonth(monthend.getMonth() + 1);
 
-    // Step backward until we're before the month starts
     while (payday >= monthstart) {
         payday.setDate(payday.getDate() - frequency);
     }
 
-    // Step forward, collecting every payday inside the month
+
     const paydays = [];
     while (payday < monthend) {
         if (payday >= monthstart) {
@@ -422,12 +410,12 @@ function toDateText(date) {
 }
 
 function showChart() {
-    // Put paychecks in date order, oldest first
+
     const sorted = paychecks.slice().sort(function (a, b) {
         return a.date.localeCompare(b.date);
     });
 
-    // Build the lists the chart needs
+ 
     const labels = [];
     const grossvalues = [];
     const takehomevalues = [];
@@ -440,7 +428,7 @@ function showChart() {
         }
     });
 
-    // Remove the old chart before drawing a new one
+
     if (incomechart) {
         incomechart.destroy();
     }
@@ -471,7 +459,7 @@ function showChart() {
 }
 
 function showCategoryChart(month, leftover) {
-    // Add up spending by category
+ 
     const totals = {};
 
     bills.forEach(function (bill) {
@@ -484,7 +472,6 @@ function showCategoryChart(month, leftover) {
         }
     });
 
-    // Turn the totals into the lists the chart needs
     const palette = ["#2f7d5b", "#e07a5f", "#3d5a80", "#f2cc8f", "#81b29a", "#9c6644",
         "#6d597a", "#e5989b", "#48cae4", "#b5838d", "#ffb703", "#8d99ae"];
     const labels = Object.keys(totals);
@@ -495,14 +482,13 @@ function showCategoryChart(month, leftover) {
         colors.push(palette[index % palette.length]);
     });
 
-    // Show what's left over as its own gray slice
     if (leftover > 0) {
         labels.push("Left over");
         values.push(leftover);
         colors.push("#4a5563");
     }
 
-    // Remove the old chart before drawing a new one
+  
     if (categorychart) {
         categorychart.destroy();
     }
@@ -527,7 +513,7 @@ function addCell(row, text) {
     row.appendChild(cell);
 }
 
-// CHANGED: one cell holding an Edit and a Delete button
+
 function addButtons(row, whenedit, whendelete) {
     const cell = document.createElement("td");
 
@@ -565,18 +551,15 @@ function addSummaryRow(label, amount) {
 }
 
 
-// ========== 6. START ==========
-
-// Set the month picker to this month, like "2026-10"
 const today = new Date();
 const thismonth = String(today.getMonth() + 1).padStart(2, "0");
 monthinput.value = today.getFullYear() + "-" + thismonth;
 
-// Fill in the saved pay schedule
+
 frequencyinput.value = schedule.frequency;
 knownpaydayinput.value = schedule.payday;
 
-// Chart colors for the dark theme
+
 Chart.defaults.color = "#8b98a5";
 Chart.defaults.borderColor = "#2f3a45";
 Chart.defaults.elements.arc.borderColor = "#1a2027";
